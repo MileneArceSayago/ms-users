@@ -1,6 +1,5 @@
 package com.msusers.controller;
 
-
 import com.msusers.models.User;
 import com.msusers.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -11,14 +10,12 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.jwt.Jwt;
 
-
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/user")
 public class UserController {
 
     private final UserService userService;
-
 
     @GetMapping("/profile")
     @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
@@ -39,13 +36,4 @@ public class UserController {
         return userRepresentation;
     }
 
-    @PostMapping("/profile/update")
-    @PreAuthorize("hasRole('USER') OR hasRole('ADMIN')")
-    public String updateUserProfile(@ModelAttribute UserRepresentation updatedUser) {
-        // Update the user's profile via the service layer
-        userService.updateUserProfile(updatedUser);
-
-        // Redirect the user to the profile page
-        return "redirect:/profile";
-    }
 }
